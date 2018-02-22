@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1,h5 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+    background-image: url(http://www.typingvidya.com/images/slide7.jpg);
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Style inputs */
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+/* Style the container/contact section */
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+    .column, input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
+
+.error {color: #FF0000;}
+</style>
+</head>
+<body>
+<div class="bgimg w3-display-container w3-text-white">
+  <div class="w3-display-middle w3-jumbo">
+    <p>booking</p>
+  </div>
+  <div class="w3-display-topleft w3-container w3-xlarge">
+    <p><a href="/" class="w3-button w3-black">home</a></p>
+  </div>
+  <div class="w3-display-bottomleft w3-container">
+    <p class="w3-xlarge">monday - friday 10-4pm | saturday 11-3pm</p>
+    <p class="w3-large">Milford, Connecticut</p>
+    <p>powered by <a href="https://www.tumblr.com/" target="_blank">tumblr</a></p>
+  </div>
+</div>
+<?php
+// define variables and set to empty values
+$nameErr = $emailErr = $websiteErr = "";
+$name = $email = $subject = $website = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["name"])) {
+    $nameErr = "Name is required";
+  } else {
+    $name = test_input($_POST["name"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+      $nameErr = "Only letters and white space allowed"; 
+    }
+  }
+  
+  if (empty($_POST["email"])) {
+    $emailErr = "Email is required";
+  } else {
+    $email = test_input($_POST["email"]);
+    // check if e-mail address is well-formed
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $emailErr = "Invalid email format"; 
+    }
+  }
+    
+  if (empty($_POST["website"])) {
+    $website = "";
+  } else {
+    $website = test_input($_POST["website"]);
+    // check if URL address syntax is valid
+    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
+      $websiteErr = "Invalid URL"; 
+    }    
+  }
+
+  if (empty($_POST["subject"])) {
+    $subject = "";
+  } else {
+    $subject = test_input($_POST["subject"]);
+  }
+
+}
+
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+?>
+
+<div class="container">
+  <div style="text-align:center">
+    <h2>Contact Us</h2>
+    <p>Swing by for a cup of coffee, or leave us a message:</p>
+  </div>
+  <div class="row">
+    <div class="column">
+      <div id="map" style="width:100%;height:500px"></div>
+    </div>
+    <div class="column">
+      <form action="/action_page.php">
+     <p><span class="error">* required field.</span></p><?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>
+     
+
+        <span class="error">* <?php echo $nameErr;?></span>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name..">
+        <span class="error">* <?php echo $nameErr;?></span>
+        
+        <label for="email">E-Mail</label>
+        <input type="text" id="email" name="email" placeholder="Your e-mail..">
+        <span class="error">* <?php echo $emailErr;?></span>
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" placeholder="Your website.."><span class="error">
+        <?php echo $websiteErr;?></span>
+        
+        <label for="country">Country</label>
+        <select id="country" name="country">
+          <option value="australia">Australia</option>
+          <option value="canada">Canada</option>
+          <option value="usa">USA</option>
+        </select>
+        <label for="subject">Subject</label>
+        <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+// Initialize google maps
+function myMap() {
+  var myCenter = new google.maps.LatLng(51.508742,-0.120850);
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {center: myCenter, zoom: 12};
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+  var marker = new google.maps.Marker({position:myCenter});
+  marker.setMap(map);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
+<!--
+To use this code on your website, get a free API key from Google.
+Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+-->
+
+   <footer> <div class="w3-black w3-center w3-padding-24">Copyright © {CopyrightYears} <a href="https://assets.tumblr.com/" title="themesbypzp" target="_blank" class="w3-hover-opacity">themesbypzp</a></div></footer> 
+</div>
+
+</body>
+</html>
