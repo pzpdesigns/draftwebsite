@@ -22,10 +22,27 @@ div.gallery {
     float: left;
     width: 100px;
 }
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 4px;
+
+* {
+    box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 50%;
+    padding: 50px;
+    height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    display: flex;
+    flex-wrap: wrap;
+     padding: 0 0px;
 }
 </style>
 <body>
@@ -41,19 +58,26 @@ div.gallery {
 <p>powered by <a href="https://www.wordpress.com/" target="_blank">wordpress</a></p>
 </div>
 </div>
+
 <div>
-<div>
-<br>
+
 <div class="row">
-<div class="column">I am a dreamer, a giver, a learner, a creator, and lover of pop culture! Plus I like to create things! I want to be able to explore and understand all the things that fascinates and appeals to me, as a better way to get to know myself, through life and my career. To be happy, you have to except and be your truest self. <a href="mailto:pzpdesigning@gmail.com"> <b>Book For Work </b></a>
-<table></table>
+
+  <div class="column" style="background-color:#111;">
+<center>
+  <img src="https://78.media.tumblr.com/033efbac012e5b568c9845c04d2aa558/tumblr_p4xip33F191waygr9o1_500.jpg" alt="Phylicia" style="width:10%">
+  <h1 style="color:#ffffff;">Phylicia Prince</h1>
+  <p style="color:grey;">Digital Strategist, Designer</p>
+  <p style="color:#ffffff;">University of Bridgeport</p></center>
+
+  </div>
+  <div class="column" style="background-color:#bbb;">
+<center><h2 style="color:#ffffff;">Who am I?</h2>
+<p style="color:#ffffff;">I am a dreamer, a giver, a learner, a creator, and lover of pop culture! Plus I like to create things! I want to be able to explore and understand all the things that fascinates and appeals to me, as a better way to get to know myself, through life and my career. To be happy, you have to except and be your truest self. <a href="mailto:pzpdesigning@gmail.com" style="color:#ffffff;"> <b>Book For Work </b></a></p></center>
+  </div>
 </div>
 </div>
-</div>
-</div>
-<div>
-<div>
-<br>
+
 <div>  <footer> <div class="w3-black w3-center w3-padding-24">Copyright © {CopyrightYears} <a href="https://pzpdesigns.com/" title="pzpdesigns" target="_blank" class="w3-hover-opacity">Phylicia Prince</a></div></footer> 
 </div></div> 
 </body>
